@@ -54,9 +54,9 @@ export const removeDollars = (amounts: string[]): number[] => {
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
     return messages
-        .filter((message: string): boolean => message.includes("?") === false)
+        .filter((message: string): boolean => !message.includes("?"))
         .map((message: string): string =>
-            message.includes("!") === true ? message.toUpperCase() : message,
+            message.includes("!") ? message.toUpperCase() : message,
         );
 };
 
