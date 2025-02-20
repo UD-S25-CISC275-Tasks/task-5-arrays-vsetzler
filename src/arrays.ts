@@ -74,7 +74,16 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (
+        colors.filter(
+            (color: string): boolean =>
+                color === "red" || color === "green" || color === "blue",
+        ).length === colors.length
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -85,7 +94,14 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) {
+        return "0=0";
+    }
+    const totalNumber: string =
+        addends
+            .reduce((total: number, addend: number) => total + addend, 0)
+            .toString() + "=";
+    return totalNumber.concat(addends.join("+"));
 }
 
 /**
@@ -98,5 +114,24 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const firstNegative = values.findIndex(
+        (value: number): boolean => value < 0,
+    );
+    if (firstNegative !== -1) {
+        //For arrays with a negative number
+        const partialArray: number[] = values.slice(0, firstNegative);
+        const sumPartial = partialArray.reduce(
+            (total: number, value: number) => total + value,
+            0,
+        );
+        const finalArr = [...values];
+        finalArr.splice(firstNegative + 1, 0, sumPartial);
+        return finalArr;
+    } else {
+        //For arrays without a negative number
+        return [
+            ...values,
+            values.reduce((total: number, value: number) => total + value, 0),
+        ];
+    }
 }
